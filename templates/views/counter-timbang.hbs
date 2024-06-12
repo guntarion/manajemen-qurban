@@ -1,0 +1,159 @@
+<h1>Counter Timbang</h1>
+
+<form style="display: flex;">
+	<div style="flex: 1;">
+		<h4>Select Weight</h4>
+		<div>
+			<input id="sapi3kg" class="radio-style" name="weight" type="radio" checked>
+			<label for="sapi3kg" class="radio-style-2-label">🐮 Sapi 3 kg</label>
+		</div>
+		<div>
+			<input id="sapi1kg" class="radio-style" name="weight" type="radio">
+			<label for="sapi1kg" class="radio-style-2-label">🐮 Sapi 1 kg</label>
+		</div>
+		<div>
+			<input id="sapiHalfKg" class="radio-style" name="weight" type="radio">
+			<label for="sapiHalfKg" class="radio-style-2-label">🐮 Sapi 1/2 kg</label>
+		</div>
+		<div>
+			<input id="kambingHalfKg" class="radio-style" name="weight" type="radio">
+			<label for="kambingHalfKg" class="radio-style-2-label">🐐 Kambing 1/2 kg</label>
+		</div>
+		<div>
+			<input id="campurHalfKg" class="radio-style" name="weight" type="radio">
+			<label for="campurHalfKg" class="radio-style-2-label">🐣 Campur 1/2 kg</label>
+		</div>
+		<div>
+			<input id="jeroan" class="radio-style" name="weight" type="radio">
+			<label for="jeroan" class="radio-style-2-label">🪺 Jeroan</label>
+		</div>
+	</div>
+
+	<div style="flex: 1;">
+		<h4>Select Quantity</h4>
+		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="1">1</a><br>
+		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="5">5</a><br>
+		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="10">10</a><br>
+		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="15">15</a>
+	</div>
+</form>
+
+{{!-- <h1 id="counter" style="font-size: 54px;">0</h1> --}}
+
+<table>
+	<tr>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮 3</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮 1</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮 ½</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐐 ½</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐣 ½</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🪺</th>
+	</tr>
+	<tr>
+		<td id="sapi3kg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="sapi1kg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="sapiHalfKg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="kambingHalfKg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="campurHalfKg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="jeroan-counter" style="font-size: 40px; text-align: center;">0</td>
+	</tr>
+	<tr>
+		<td style="text-align: center;"><button id="sapi3kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapi1kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapiHalfKg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="kambingHalfKg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="campurHalfKg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="jeroan-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+	</tr>
+</table>
+
+<style>
+	table {
+		border-collapse: collapse;
+	}
+
+	td,
+	th {
+		border-right: 1px solid #000;
+		border-left: 1px solid #000;
+	}
+
+	th:first-child,
+	td:first-child {
+		border-left: none;
+	}
+
+	th:last-child,
+	td:last-child {
+		border-right: none;
+	}
+</style>
+
+<script>
+	// Get all the buttons
+	var buttons = document.querySelectorAll('.button');
+
+	// Add a click event listener to each button
+	buttons.forEach(function (button) {
+		button.addEventListener('click', function (event) {
+			// Prevent the default action
+			event.preventDefault();
+
+			// Get the value of the button and convert it to a number
+			var value = Number(button.getAttribute('value'));
+
+			// Get the selected radio button
+			var selectedRadio = document.querySelector('input[name="weight"]:checked');
+
+			// If a radio button is selected
+			if (selectedRadio) {
+				// Get the id of the selected radio button
+				var id = selectedRadio.getAttribute('id');
+
+				// Get the counter element associated with the selected radio button
+				var counterElement = document.getElementById(id + '-counter');
+
+				// Get the current counter value and convert it to a number
+				var counter = Number(counterElement.textContent);
+
+				// Increase the counter
+				counter += value;
+
+				// Update the counter element
+				counterElement.textContent = counter;
+			}
+		});
+	});
+
+	// Get all the decrease buttons
+	var decreaseButtons = document.querySelectorAll('.decrease-button');
+
+	// Add a click event listener to each decrease button
+	decreaseButtons.forEach(function(button) {
+		button.addEventListener('click', function(event) {
+			// Prevent the default action
+			event.preventDefault();
+
+			// Get the id of the button
+			var id = button.getAttribute('id');
+
+			// Remove '-decrease' from the id to get the id of the associated counter
+			var counterId = id.replace('-decrease', '');
+
+			// Get the counter element
+			var counterElement = document.getElementById(counterId + '-counter');
+
+			// Get the current counter value and convert it to a number
+			var counter = Number(counterElement.textContent);
+
+			// Decrease the counter
+			counter -= 1;
+
+			// Make sure the counter doesn't go below 0
+			counter = Math.max(counter, 0);
+
+			// Update the counter element
+			counterElement.textContent = counter;
+		});
+	});
+</script>
