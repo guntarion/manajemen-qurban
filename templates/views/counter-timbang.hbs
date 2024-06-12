@@ -13,15 +13,15 @@
 		</div>
 		<div>
 			<input id="sapiHalfKg" class="radio-style" name="weight" type="radio">
-			<label for="sapiHalfKg" class="radio-style-2-label">🐮 Sapi 1/2 kg</label>
+			<label for="sapiHalfKg" class="radio-style-2-label">🐮 Sapi ½ kg</label>
 		</div>
 		<div>
 			<input id="kambingHalfKg" class="radio-style" name="weight" type="radio">
-			<label for="kambingHalfKg" class="radio-style-2-label">🐐 Kambing 1/2 kg</label>
+			<label for="kambingHalfKg" class="radio-style-2-label">🐐 Kambing ½ kg</label>
 		</div>
 		<div>
 			<input id="campurHalfKg" class="radio-style" name="weight" type="radio">
-			<label for="campurHalfKg" class="radio-style-2-label">🐣 Campur 1/2 kg</label>
+			<label for="campurHalfKg" class="radio-style-2-label">🐣 Campur ½ kg</label>
 		</div>
 		<div>
 			<input id="jeroan" class="radio-style" name="weight" type="radio">
@@ -31,10 +31,10 @@
 
 	<div style="flex: 1;">
 		<h4>Select Quantity</h4>
-		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="1">1</a><br>
-		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="5">5</a><br>
-		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="10">10</a><br>
-		<a href="#" class="button button-3d button-xlarge button-rounded button-dirtygreen" value="15">15</a>
+		<a href="#" id="button1" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="1" data-id="1" data-counter="sapi3kg-counter">1</a><br>
+		<a href="#" id="button5" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="5" data-id="2" data-counter="sapi1kg-counter">5</a><br>
+		<a href="#" id="button10" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="10" data-id="3" data-counter="sapiHalfKg-counter">10</a><br>
+		<a href="#" id="button15" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="15" data-id="4" data-counter="kambingHalfKg-counter">15</a>
 	</div>
 </form>
 
@@ -67,6 +67,14 @@
 	</tr>
 </table>
 
+
+<div style="margin: 20px;">
+	<h4>History Penambahan</h4>
+	<ul id="history"></ul>
+</div>
+
+
+
 <style>
 	table {
 		border-collapse: collapse;
@@ -89,7 +97,11 @@
 	}
 </style>
 
+
+
 <script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+	
 	// Get all the buttons
 	var buttons = document.querySelectorAll('.button');
 
@@ -125,35 +137,216 @@
 		});
 	});
 
-	// Get all the decrease buttons
-	var decreaseButtons = document.querySelectorAll('.decrease-button');
+	// Get all decrease buttons
+	const decreaseButtons = document.querySelectorAll('.decrease-button');
 
-	// Add a click event listener to each decrease button
-	decreaseButtons.forEach(function(button) {
-		button.addEventListener('click', function(event) {
-			// Prevent the default action
-			event.preventDefault();
+	// Add event listeners to the decrease buttons
+	decreaseButtons.forEach(button => {
+		button.addEventListener('click', handleDecreaseClick);
+	});
 
-			// Get the id of the button
-			var id = button.getAttribute('id');
+	function handleDecreaseClick(event) {
+		event.preventDefault();
 
-			// Remove '-decrease' from the id to get the id of the associated counter
-			var counterId = id.replace('-decrease', '');
+		// Get the id of the counter to decrease
+		const counterId = event.target.id.replace('-decrease', '');
 
-			// Get the counter element
-			var counterElement = document.getElementById(counterId + '-counter');
+		
+		// Get the counter element
+		const counterElement = document.getElementById(counterId + '-counter');
 
-			// Get the current counter value and convert it to a number
-			var counter = Number(counterElement.textContent);
+		// Check if the counter is already at 0
+		if (Number(counterElement.textContent) <= 0) {
+			alert('Counter cannot go below 0.');
+			return;
+		}
 
-			// Decrease the counter
-			counter -= 1;
+		// Decrease the counter
+		counterElement.textContent = Number(counterElement.textContent) - 1;
 
-			// Make sure the counter doesn't go below 0
-			counter = Math.max(counter, 0);
+		// Decrease the counter
+		// const counterElement = document.getElementById(counterId + '-counter');
+		// counterElement.textContent = Number(counterElement.textContent) - 1;
 
-			// Update the counter element
-			counterElement.textContent = counter;
+		// Mapping from radio button ids to hasil_timbang ids
+		const idMap = {
+			'sapi3kg': 1,
+			'sapi1kg': 2,
+			'sapiHalfKg': 3,
+			'kambingHalfKg': 4,
+			'campurHalfKg': 5,
+			'jeroan': 6
+		};
+
+		// Get the hasil_timbang_id
+		const hasil_timbang_id = idMap[counterId];
+		if (!hasil_timbang_id) {
+			console.error('No hasil_timbang_id found for id:', counterId);
+			return;
+		}
+
+		// Mapping from radio button ids to readable names
+		const idToNameMap = {
+			'sapi3kg': '🐮 Sapi 3 kg',
+			'sapi1kg': '🐮 Sapi 1 kg',
+			'sapiHalfKg': '🐮 Sapi ½ kg',
+			'kambingHalfKg': '🐐 Kambing ½ kg',
+			'campurHalfKg': '🐣 Campur ½ kg',
+			'jeroan': '🪺 Jeroan'
+		};
+
+		// Get the readable name
+		const name = idToNameMap[counterId];
+		if (!name) {
+			console.error('No name found for id:', counterId);
+			return;
+		}
+
+		// Add to history
+		const historyElement = document.getElementById('history');
+		const historyItem = document.createElement('li');
+		const currentTime = new Date().toLocaleTimeString(); // get current time
+		historyItem.textContent = `Decreased 1 from ${name} (${currentTime})`;
+		historyElement.insertBefore(historyItem, historyElement.firstChild); // prepend the new item
+
+		// Limit history to 20 most recent changes
+		while (historyElement.children.length > 20) {
+			historyElement.removeChild(historyElement.lastChild); // remove the last item
+		}
+
+		// Send a POST request to the /api/history endpoint
+		fetch('/api/history', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				hasil_timbang_id: hasil_timbang_id,
+				operation: 'decrease',
+				value: 1,
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			// Handle the response data
+			console.log(data);
+		})
+		.catch((error) => {
+			console.error('Error:', error);
 		});
+	}
+
+
+	// Get the buttons
+	const button1 = document.getElementById('button1');
+	const button5 = document.getElementById('button5');
+	const button10 = document.getElementById('button10');
+	const button15 = document.getElementById('button15');
+
+	function handleClick(event) {
+		event.preventDefault();
+
+		// Get the selected radio button
+		const selectedRadioButton = document.querySelector('input[name="weight"]:checked');
+		if (!selectedRadioButton) {
+			alert('Please select a weight first.');
+			return;
+		}
+
+		// Mapping from radio button ids to hasil_timbang ids
+		const idMap = {
+			'sapi3kg': 1,
+			'sapi1kg': 2,
+			'sapiHalfKg': 3,
+			'kambingHalfKg': 4,
+			'campurHalfKg': 5,
+			'jeroan': 6
+		};
+
+		// Get the hasil_timbang_id
+		const hasil_timbang_id = idMap[selectedRadioButton.id];
+		if (!hasil_timbang_id) {
+			console.error('No hasil_timbang_id found for id:', selectedRadioButton.id);
+			return;
+		}
+
+		// Get the counter element associated with the selected radio button
+		const counterId = selectedRadioButton.id + '-counter';
+		const counterElement = document.getElementById(counterId);
+		if (!counterElement) {
+			console.error('No counter element found with id:', counterId);
+			return;
+		}
+
+		// Get the value from the clicked button
+		const buttonValue = parseInt(event.target.getAttribute('data-value'), 10);
+		if (isNaN(buttonValue)) {
+			console.error('Invalid button value:', buttonValue);
+			return;
+		}
+
+		// Update the counter
+		const currentCounterValue = parseInt(counterElement.textContent, 10);
+		counterElement.textContent = currentCounterValue + buttonValue;
+
+		// Mapping from radio button ids to readable names
+		const idToNameMap = {
+			'sapi3kg': '🐮 Sapi 3️⃣ kg',
+			'sapi1kg': '🐮 Sapi 1️⃣ kg',
+			'sapiHalfKg': '🐮 Sapi ½ kg',
+			'kambingHalfKg': '🐐 Kambing ½ kg',
+			'campurHalfKg': '🐣 Campur ½ kg',
+			'jeroan': '🪺 Jeroan'
+		};
+
+		// Get the readable name
+		const name = idToNameMap[selectedRadioButton.id];
+		if (!name) {
+			console.error('No name found for id:', selectedRadioButton.id);
+			return;
+		}
+
+		// Add to history
+		const historyElement = document.getElementById('history');
+		const historyItem = document.createElement('li');
+		const currentTime = new Date().toLocaleTimeString(); // get current time
+		historyItem.textContent = `Added ${buttonValue} to ${name} (${currentTime})`;
+		historyElement.insertBefore(historyItem, historyElement.firstChild); // prepend the new item
+
+		// Limit history to 20 most recent changes
+		while (historyElement.children.length > 20) {
+			historyElement.removeChild(historyElement.lastChild); // remove the last item
+		}
+
+		// Send a POST request to the /history endpoint
+		fetch('/api/history', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				hasil_timbang_id: hasil_timbang_id,
+				operation: 'add',
+				value: buttonValue,
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			// Handle the response data
+			console.log(data);
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+	}
+
+	// Add event listeners to the buttons
+	button1.addEventListener('click', handleClick);
+	button5.addEventListener('click', handleClick);
+	button10.addEventListener('click', handleClick);
+	button15.addEventListener('click', handleClick);
+
+	
+
 	});
 </script>
