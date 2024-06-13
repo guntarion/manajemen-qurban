@@ -9,7 +9,10 @@ async function broadcastInventoryUpdate() {
     const inventory = await getInventory();
     const inventoryMap = {};
     inventory.forEach((item) => {
-      inventoryMap[item.name] = item.hasil;
+      inventoryMap[item.name] = {
+        hasil: item.hasil,
+        target_value: item.target_value,
+      };
     });
     const data = {
       type: "update-inventory",
@@ -26,13 +29,17 @@ async function broadcastInventoryUpdate() {
   }
 }
 
+
 async function broadcastTimbangUpdate() {
   try {
     console.log("Fetching timbang data...");
     const timbang = await getTimbang();
     const timbangMap = {};
     timbang.forEach((item) => {
-      timbangMap[item.name] = item.hasil;
+      timbangMap[item.name] = {
+        hasil: item.hasil,
+        target_value: item.target_value, // Ensure target_value is included
+      };
     });
     const data = {
       type: "update-timbang",
@@ -48,5 +55,6 @@ async function broadcastTimbangUpdate() {
     console.error("Error broadcasting timbang update:", error);
   }
 }
+
 
 module.exports = { wss, broadcastInventoryUpdate, broadcastTimbangUpdate };

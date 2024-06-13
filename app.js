@@ -29,25 +29,27 @@ const viewsPath = path.join(__dirname, "./templates/views");
 const partialsPath = path.join(__dirname, "./templates/partials");
 const layoutsPath = path.join(__dirname, "./templates/layouts");
 
-app.engine(
-  "hbs",
-  engine({
-    extname: "hbs", // sets the extension name to .hbs
-    defaultLayout: "main", // sets the default layout to main.hbs
-    layoutsDir: layoutsPath, // path to layouts folder
-    partialsDir: partialsPath, // path to partials folder
-    helpers: {
-      truncate: function (str, numWords) {
-        var words = str.split(" ");
-        if (words.length > numWords) {
-          words = words.slice(0, numWords);
-          return words.join(" ") + "...";
-        }
-        return str;
-      },
+const hbs = engine({
+  extname: "hbs", // sets the extension name to .hbs
+  defaultLayout: "main", // sets the default layout to main.hbs
+  layoutsDir: layoutsPath, // path to layouts folder
+  partialsDir: partialsPath, // path to partials folder
+  helpers: {
+    truncate: function (str, numWords) {
+      var words = str.split(" ");
+      if (words.length > numWords) {
+        words = words.slice(0, numWords);
+        return words.join(" ") + "...";
+      }
+      return str;
     },
-  })
-);
+    subtract: function (a, b) {
+      return a - b;
+    },
+  },
+});
+
+app.engine("hbs", hbs);
 app.set("view engine", "hbs");
 app.set("views", viewsPath);
 

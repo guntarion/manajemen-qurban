@@ -1,6 +1,6 @@
 <h1>Counter Inventori</h1>
 
-<h3>Komulatif Inventory</h3>
+<h3>Capaian Inventory</h3>
 <table id="numberInventoryFromDatabase">
 	<tr>
 		<th style="width: 300px; font-size: 21px; text-align: center;">Jenis</th>
@@ -12,20 +12,25 @@
 	<tr>
 		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
 		<td id="sapipengqurban3kg-value" style="font-size: 21px; text-align: center; padding: 20px">
-			{{inventory.sapipengqurban3kg}}</td>
-		<td id="sapipengqurban3kg-target" style="font-size: 21px; text-align: center; padding: 20px">400</td>
+			{{inventory.sapipengqurban3kg.hasil}}</td>
+		<td id="sapipengqurban3kg-target" style="font-size: 21px; text-align: center; padding: 20px">
+			{{inventory.sapipengqurban3kg.target_value}}</td>
 		<td id="sapipengqurban3kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
 		<td id="sapipengqurban3kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">300</td>
 	</tr>
 	<tr>
 		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
 		<td id="sapikambing2kg-value" style="font-size: 21px; text-align: center; padding: 20px">
-			{{inventory.sapikambing2kg}}</td>
-		<td id="sapikambing2kg-target" style="font-size: 21px; text-align: center; padding: 20px">100</td>
+			{{inventory.sapikambing2kg.hasil}}</td>
+		<td id="sapikambing2kg-target" style="font-size: 21px; text-align: center; padding: 20px">
+			{{inventory.sapikambing2kg.target_value}}</td>
 		<td id="sapikambing2kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
 		<td id="sapikambing2kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">100</td>
 	</tr>
 </table>
+
+
+<div class="line"></div>
 
 <form style="display: flex;">
 	<div style="flex: 1;">
@@ -61,7 +66,7 @@
 	</div>
 </form>
 
-<h3>Komulatif Inventori</h3>
+<div class="line"></div>
 <table id="numberFromDatabase">
 	<tr>
 		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
@@ -70,12 +75,14 @@
 		<th style="width: 100px; font-size: 25px; text-align: center;">🐐🐣 1</th>
 	</tr>
 	<tr>
-		<td id="sapipengqurban3kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapipengqurban3kg}}
+		<td id="sapipengqurban3kg-database" style="font-size: 40px; text-align: center;">
+			{{inventory.sapipengqurban3kg.hasil}}</td>
+		<td id="sapikambing2kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapikambing2kg.hasil}}
 		</td>
-		<td id="sapikambing2kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapikambing2kg}}</td>
-		<td id="sapicampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapicampur1kg}}</td>
-		<td id="kambingcampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.kambingcampur1kg}}
+		<td id="sapicampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapicampur1kg.hasil}}
 		</td>
+		<td id="kambingcampur1kg-database" style="font-size: 40px; text-align: center;">
+			{{inventory.kambingcampur1kg.hasil}}</td>
 	</tr>
 </table>
 
@@ -134,212 +141,214 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
-		const socket = new WebSocket('ws://localhost:5050');
+    const socket = new WebSocket('ws://localhost:5050');
 
-		socket.addEventListener('open', (event) => {
-			console.log('Counter Inventory is Connected to WebSocket server');
-		});
+    socket.addEventListener('open', (event) => {
+        console.log('Counter Inventory is Connected to WebSocket server');
+    });
 
-		socket.addEventListener('message', (event) => {
-			const data = JSON.parse(event.data);
-			console.log('WebSocket message received:', data);
-			if (data.type === 'update-inventory') {
-				document.getElementById('sapipengqurban3kg-database').textContent = data.inventory.sapipengqurban3kg;
-				document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg;
-				document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg;
-				document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg;
+    socket.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+        console.log('WebSocket message received:', data);
+        if (data.type === 'update-inventory') {                
+            document.getElementById('sapipengqurban3kg-database').textContent = data.inventory.sapipengqurban3kg.hasil;
+            document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg.hasil;
+            document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg.hasil;
+            document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg.hasil;
 
-				// Update the detailed inventory table
-				document.getElementById('sapipengqurban3kg-value').textContent = data.inventory.sapipengqurban3kg;
-				const sapipengqurban3kgTarget = document.getElementById('sapipengqurban3kg-target').textContent;
-				document.getElementById('sapipengqurban3kg-percent').textContent = ((data.inventory.sapipengqurban3kg / sapipengqurban3kgTarget) * 100).toFixed(2) + '%';
-				document.getElementById('sapipengqurban3kg-remaining').textContent = sapipengqurban3kgTarget - data.inventory.sapipengqurban3kg;
+            // Update the detailed inventory table
+            document.getElementById('sapipengqurban3kg-value').textContent = data.inventory.sapipengqurban3kg.hasil;
+            const sapipengqurban3kgTarget = data.inventory.sapipengqurban3kg.target_value;
+            document.getElementById('sapipengqurban3kg-target').textContent = sapipengqurban3kgTarget;
+            document.getElementById('sapipengqurban3kg-percent').textContent = ((data.inventory.sapipengqurban3kg.hasil / sapipengqurban3kgTarget) * 100).toFixed(2) + '%';
+            document.getElementById('sapipengqurban3kg-remaining').textContent = sapipengqurban3kgTarget - data.inventory.sapipengqurban3kg.hasil;
 
-				document.getElementById('sapikambing2kg-value').textContent = data.inventory.sapikambing2kg;
-				const sapikambing2kgTarget = document.getElementById('sapikambing2kg-target').textContent;
-				document.getElementById('sapikambing2kg-percent').textContent = ((data.inventory.sapikambing2kg / sapikambing2kgTarget) * 100).toFixed(2) + '%';
-				document.getElementById('sapikambing2kg-remaining').textContent = sapikambing2kgTarget - data.inventory.sapikambing2kg;
-			}
-		});
+            document.getElementById('sapikambing2kg-value').textContent = data.inventory.sapikambing2kg.hasil;
+            const sapikambing2kgTarget = data.inventory.sapikambing2kg.target_value;
+            document.getElementById('sapikambing2kg-target').textContent = sapikambing2kgTarget;
+            document.getElementById('sapikambing2kg-percent').textContent = ((data.inventory.sapikambing2kg.hasil / sapikambing2kgTarget) * 100).toFixed(2) + '%';
+            document.getElementById('sapikambing2kg-remaining').textContent = sapikambing2kgTarget - data.inventory.sapikambing2kg.hasil;
+        }
+    });
 
-		socket.addEventListener('close', (event) => {
-			console.log('Counter Inventory is Disconnected from WebSocket server');
-		});
+    socket.addEventListener('close', (event) => {
+        console.log('Counter Inventory is Disconnected from WebSocket server');
+    });
 
-		// Ensure WebSocket is open before sending a message
-		function sendWebSocketMessage(data) {
-			if (socket.readyState === WebSocket.OPEN) {
-				socket.send(JSON.stringify(data));
-			} else {
-				console.log('WebSocket is not open. ReadyState:', socket.readyState);
-			}
-		}
+    // Ensure WebSocket is open before sending a message
+    function sendWebSocketMessage(data) {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(data));
+        } else {
+            console.log('WebSocket is not open. ReadyState:', socket.readyState);
+        }
+    }
 
-		// Add the click event listeners for the buttons
-		const buttons = document.querySelectorAll('.button');
-		buttons.forEach(button => button.addEventListener('click', handleClick));
+    // Add the click event listeners for the buttons
+    const buttons = document.querySelectorAll('.button');
+    buttons.forEach(button => button.addEventListener('click', handleClick));
 
-		// Add the click event listeners for the decrease buttons
-		const decreaseButtons = document.querySelectorAll('.decrease-button');
-		decreaseButtons.forEach(button => button.addEventListener('click', handleDecreaseClick));
+    // Add the click event listeners for the decrease buttons
+    const decreaseButtons = document.querySelectorAll('.decrease-button');
+    decreaseButtons.forEach(button => button.addEventListener('click', handleDecreaseClick));
 
-		function handleClick(event) {
-			event.preventDefault();
+    function handleClick(event) {
+        event.preventDefault();
 
-			const selectedRadioButton = document.querySelector('input[name="weight"]:checked');
-			if (!selectedRadioButton) {
-				alert('Please select a weight first.');
-				return;
-			}
+        const selectedRadioButton = document.querySelector('input[name="weight"]:checked');
+        if (!selectedRadioButton) {
+            alert('Please select a weight first.');
+            return;
+        }
 
-			const counterId = selectedRadioButton.id;
-			const counterElement = document.getElementById(counterId + '-counter');
-			if (!counterElement) {
-				console.error('No counter element found with id:', counterId);
-				return;
-			}
+        const counterId = selectedRadioButton.id;
+        const counterElement = document.getElementById(counterId + '-counter');
+        if (!counterElement) {
+            console.error('No counter element found with id:', counterId);
+            return;
+        }
 
-			const idMap = {
-				'sapipengqurban3kg': 1,
-				'sapikambing2kg': 2,
-				'sapicampur1kg': 3,
-				'kambingcampur1kg': 4,
-			};
+        const idMap = {
+            'sapipengqurban3kg': 1,
+            'sapikambing2kg': 2,
+            'sapicampur1kg': 3,
+            'kambingcampur1kg': 4,
+        };
 
-			const inventori_id = idMap[counterId];
-			if (!inventori_id) {
-				console.error('No inventori_id found for id:', counterId);
-				return;
-			}
+        const inventori_id = idMap[counterId];
+        if (!inventori_id) {
+            console.error('No inventori_id found for id:', counterId);
+            return;
+        }
 
-			const buttonValue = parseInt(event.target.getAttribute('data-value'), 10);
-			if (isNaN(buttonValue)) {
-				console.error('Invalid button value:', buttonValue);
-				return;
-			}
+        const buttonValue = parseInt(event.target.getAttribute('data-value'), 10);
+        if (isNaN(buttonValue)) {
+            console.error('Invalid button value:', buttonValue);
+            return;
+        }
 
-			const currentCounterValue = parseInt(counterElement.textContent, 10);
-			counterElement.textContent = currentCounterValue + buttonValue;
+        const currentCounterValue = parseInt(counterElement.textContent, 10);
+        counterElement.textContent = currentCounterValue + buttonValue;
 
-			const idToNameMap = {
-				'sapipengqurban3kg': '🐮 Sapi 3 kg',
-				'sapikambing2kg': '🐮 Sapi 1 kg',
-				'sapicampur1kg': '🐮 Sapi ½ kg',
-				'kambingcampur1kg': '🐐 Kambing ½ kg',
-			};
+        const idToNameMap = {
+            'sapipengqurban3kg': '🐮 Sapi 3 kg',
+            'sapikambing2kg': '🐮 Sapi 1 kg',
+            'sapicampur1kg': '🐮 Sapi ½ kg',
+            'kambingcampur1kg': '🐐 Kambing ½ kg',
+        };
 
-			const name = idToNameMap[counterId];
-			if (!name) {
-				console.error('No name found for id:', counterId);
-				return;
-			}
+        const name = idToNameMap[counterId];
+        if (!name) {
+            console.error('No name found for id:', counterId);
+            return;
+        }
 
-			const historyElement = document.getElementById('history');
-			const historyItem = document.createElement('li');
-			const currentTime = new Date().toLocaleTimeString();
-			historyItem.textContent = `Added ${buttonValue} to ${name} (${currentTime})`;
-			historyElement.insertBefore(historyItem, historyElement.firstChild);
+        const historyElement = document.getElementById('history');
+        const historyItem = document.createElement('li');
+        const currentTime = new Date().toLocaleTimeString();
+        historyItem.textContent = `Added ${buttonValue} to ${name} (${currentTime})`;
+        historyElement.insertBefore(historyItem, historyElement.firstChild);
 
-			while (historyElement.children.length > 20) {
-				historyElement.removeChild(historyElement.lastChild);
-			}
+        while (historyElement.children.length > 20) {
+            historyElement.removeChild(historyElement.lastChild);
+        }
 
-			console.log('Sending AJAX request to /api/history-inventori');
-			fetch('/api/history-inventori', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					inventori_id: inventori_id,
-					operation: 'add',
-					value: buttonValue,
-				}),
-			})
-				.then(response => response.json())
-				.then(data => {
-					console.log('Response from /api/history-inventori:', data);
-					// Send a WebSocket message to update the counter in real-time
-					sendWebSocketMessage({
-						type: 'update-counter',
-						inventori_id: inventori_id,
-						value: currentCounterValue + buttonValue
-					});
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-		}
+        console.log('Sending AJAX request to /api/history-inventori');
+        fetch('/api/history-inventori', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                inventori_id: inventori_id,
+                operation: 'add',
+                value: buttonValue,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from /api/history-inventori:', data);
+                // Send a WebSocket message to update the counter in real-time
+                sendWebSocketMessage({
+                    type: 'update-counter',
+                    inventori_id: inventori_id,
+                    value: currentCounterValue + buttonValue
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
-		function handleDecreaseClick(event) {
-			event.preventDefault();
+    function handleDecreaseClick(event) {
+        event.preventDefault();
 
-			const counterId = event.target.id.replace('-decrease', '');
-			const counterElement = document.getElementById(counterId + '-counter');
+        const counterId = event.target.id.replace('-decrease', '');
+        const counterElement = document.getElementById(counterId + '-counter');
 
-			counterElement.textContent = Number(counterElement.textContent) - 1;
+        counterElement.textContent = Number(counterElement.textContent) - 1;
 
-			const idMap = {
-				'sapipengqurban3kg': 1,
-				'sapikambing2kg': 2,
-				'sapicampur1kg': 3,
-				'kambingcampur1kg': 4,
-			};
+        const idMap = {
+            'sapipengqurban3kg': 1,
+            'sapikambing2kg': 2,
+            'sapicampur1kg': 3,
+            'kambingcampur1kg': 4,
+        };
 
-			const inventori_id = idMap[counterId];
-			if (!inventori_id) {
-				console.error('No inventori_id found for id:', counterId);
-				return;
-			}
+        const inventori_id = idMap[counterId];
+        if (!inventori_id) {
+            console.error('No inventori_id found for id:', counterId);
+            return;
+        }
 
-			const idToNameMap = {
-				'sapipengqurban3kg': '🐮 Sapi 3 kg',
-				'sapikambing2kg': '🐮 Sapi 1 kg',
-				'sapicampur1kg': '🐮 Sapi ½ kg',
-				'kambingcampur1kg': '🐐 Kambing ½ kg',
-			};
+        const idToNameMap = {
+            'sapipengqurban3kg': '🐮 Sapi 3 kg',
+            'sapikambing2kg': '🐮 Sapi 1 kg',
+            'sapicampur1kg': '🐮 Sapi ½ kg',
+            'kambingcampur1kg': '🐐 Kambing ½ kg',
+        };
 
-			const name = idToNameMap[counterId];
-			if (!name) {
-				console.error('No name found for id:', counterId);
-				return;
-			}
+        const name = idToNameMap[counterId];
+        if (!name) {
+            console.error('No name found for id:', counterId);
+            return;
+        }
 
-			const historyElement = document.getElementById('history');
-			const historyItem = document.createElement('li');
-			const currentTime = new Date().toLocaleTimeString();
-			historyItem.textContent = `Decreased 1 from ${name} (${currentTime})`;
-			historyElement.insertBefore(historyItem, historyElement.firstChild);
+        const historyElement = document.getElementById('history');
+        const historyItem = document.createElement('li');
+        const currentTime = new Date().toLocaleTimeString();
+        historyItem.textContent = `Decreased 1 from ${name} (${currentTime})`;
+        historyElement.insertBefore(historyItem, historyElement.firstChild);
 
-			while (historyElement.children.length > 20) {
-				historyElement.removeChild(historyElement.lastChild);
-			}
+        while (historyElement.children.length > 20) {
+            historyElement.removeChild(historyElement.lastChild);
+        }
 
-			console.log('Sending AJAX request to /api/history-inventori');
-			fetch('/api/history-inventori', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					inventori_id: inventori_id,
-					operation: 'decrease',
-					value: 1,
-				}),
-			})
-				.then(response => response.json())
-				.then(data => {
-					console.log('Response from /api/history-inventori:', data);
-					// Send a WebSocket message to update the counter in real-time
-					sendWebSocketMessage({
-						type: 'update-counter',
-						inventori_id: inventori_id,
-						value: Number(counterElement.textContent)
-					});
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-		}
-	});
+        console.log('Sending AJAX request to /api/history-inventori');
+        fetch('/api/history-inventori', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                inventori_id: inventori_id,
+                operation: 'decrease',
+                value: 1,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from /api/history-inventori:', data);
+                // Send a WebSocket message to update the counter in real-time
+                sendWebSocketMessage({
+                    type: 'update-counter',
+                    inventori_id: inventori_id,
+                    value: Number(counterElement.textContent)
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+});
 </script>

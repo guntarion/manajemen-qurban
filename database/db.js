@@ -27,13 +27,14 @@ async function insertHistoryInventori(inventori_id, operation, value) {
   return result;
 }
 
-async function getInventory() {
-  const [rows] = await pool.query("SELECT * FROM inventory");
+const getInventory = async () => {
+  const query = 'SELECT name, hasil, target_value FROM inventory';
+  const [rows] = await pool.execute(query);
   return rows;
-}
+};
 
 async function getTimbang() {
-  const [rows] = await pool.query("SELECT * FROM hasil_timbang");
+  const [rows] = await pool.query("SELECT name, hasil, target_value FROM hasil_timbang");
   return rows;
 }
 

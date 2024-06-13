@@ -1,6 +1,6 @@
 <h1>Counter Timbang</h1>
 
-<h3>Komulatif Inventory</h3>
+<h3>Capaian Timbang</h3>
 <table id="numberInventoryFromDatabase">
 	<tr>
 		<th style="width: 300px; font-size: 21px; text-align: center;">Jenis</th>
@@ -12,20 +12,25 @@
 	<tr>
 		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
 		<td id="sapipengqurban3kg-value" style="font-size: 21px; text-align: center; padding: 20px">
-			{{timbang.Sapi_three_kg}}</td>
-		<td id="sapipengqurban3kg-target" style="font-size: 21px; text-align: center; padding: 20px">400</td>
+			{{timbang.Sapi_three_kg.hasil}}</td>
+		<td id="sapipengqurban3kg-target" style="font-size: 21px; text-align: center; padding: 20px">
+			{{timbang.Sapi_three_kg.target_value}}</td>
 		<td id="sapipengqurban3kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
-		<td id="sapipengqurban3kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">300</td>
+		<td id="sapipengqurban3kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">{{subtract
+			timbang.Sapi_three_kg.target_value timbang.Sapi_three_kg.hasil}}</td>
 	</tr>
 	<tr>
 		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
-		<td id="sapikambing2kg-value" style="font-size: 21px; text-align: center; padding: 20px">{{timbang.Sapi_one_kg}}
-		</td>
-		<td id="sapikambing2kg-target" style="font-size: 21px; text-align: center; padding: 20px">100</td>
+		<td id="sapikambing2kg-value" style="font-size: 21px; text-align: center; padding: 20px">
+			{{timbang.Sapi_one_kg.hasil}}</td>
+		<td id="sapikambing2kg-target" style="font-size: 21px; text-align: center; padding: 20px">
+			{{timbang.Sapi_one_kg.target_value}}</td>
 		<td id="sapikambing2kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
-		<td id="sapikambing2kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">100</td>
+		<td id="sapikambing2kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">{{subtract
+			timbang.Sapi_one_kg.target_value timbang.Sapi_one_kg.hasil}}</td>
 	</tr>
 </table>
+
 
 
 
@@ -82,12 +87,12 @@
 		<th style="width: 100px; font-size: 25px; text-align: center;">🪺</th>
 	</tr>
 	<tr>
-		<td id="sapi3kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_three_kg}}</td>
-		<td id="sapi1kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_one_kg}}</td>
-		<td id="sapiHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_half_kg}}</td>
-		<td id="kambingHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Kambing_half_kg}}</td>
-		<td id="campurHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Campur_half_kg}}</td>
-		<td id="jeroan-database" style="font-size: 40px; text-align: center;">{{timbang.Jeroan}}</td>
+		<td id="sapi3kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_three_kg.hasil}}</td>
+		<td id="sapi1kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_one_kg.hasil}}</td>
+		<td id="sapiHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_half_kg.hasil}}</td>
+		<td id="kambingHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Kambing_half_kg.hasil}}</td>
+		<td id="campurHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Campur_half_kg.hasil}}</td>
+		<td id="jeroan-database" style="font-size: 40px; text-align: center;">{{timbang.Jeroan.hasil}}</td>
 	</tr>
 </table>
 
@@ -163,23 +168,18 @@
 			const data = JSON.parse(event.data);
 			console.log('WebSocket message received:', data);
 			if (data.type === 'update-timbang') {
-				document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg;
-				document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg;
-				document.getElementById('sapiHalfKg-database').textContent = data.timbang.Sapi_half_kg;
-				document.getElementById('kambingHalfKg-database').textContent = data.timbang.Kambing_half_kg;
-				document.getElementById('campurHalfKg-database').textContent = data.timbang.Campur_half_kg;
-				document.getElementById('jeroan-database').textContent = data.timbang.Jeroan;
+				document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg.hasil;
+				document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg.hasil;
+				document.getElementById('sapiHalfKg-database').textContent = data.timbang.Sapi_half_kg.hasil;
+				document.getElementById('kambingHalfKg-database').textContent = data.timbang.Kambing_half_kg.hasil;
+				document.getElementById('campurHalfKg-database').textContent = data.timbang.Campur_half_kg.hasil;
+				document.getElementById('jeroan-database').textContent = data.timbang.Jeroan.hasil;
 
 				// Update the relevant fields for the new table
-				document.getElementById('sapipengqurban3kg-value').textContent = data.timbang.Sapi_three_kg;
-				document.getElementById('sapikambing2kg-value').textContent = data.timbang.Sapi_one_kg;
-
-				// Update the percentage and remaining fields for each item
-				updatePercentageAndRemaining('sapipengqurban3kg');
-				updatePercentageAndRemaining('sapikambing2kg');
+				updateInventory('sapipengqurban3kg', data.timbang.Sapi_three_kg);
+				updateInventory('sapikambing2kg', data.timbang.Sapi_one_kg);
 			}
 		});
-
 
 		socket.addEventListener('close', (event) => {
 			console.log('Counter Timbang is Disconnected from WebSocket server');
@@ -369,24 +369,30 @@
 				});
 		}
 
-		function updatePercentageAndRemaining(counterId) {
-			const valueElement = document.getElementById(counterId + '-value');
-			const targetElement = document.getElementById(counterId + '-target');
-			const percentElement = document.getElementById(counterId + '-percent');
-			const remainingElement = document.getElementById(counterId + '-remaining');
+		function updateInventory(id, data) {
+			const valueElement = document.getElementById(`${id}-value`);
+			const targetElement = document.getElementById(`${id}-target`);
+			const percentElement = document.getElementById(`${id}-percent`);
+			const remainingElement = document.getElementById(`${id}-remaining`);
 
-			const value = parseInt(valueElement.textContent, 10);
-			const target = parseInt(targetElement.textContent, 10);
-
-			const percent = ((value / target) * 100).toFixed(2);
-			const remaining = target - value;
+			valueElement.textContent = data.hasil;
+			const target = data.target_value;
+			targetElement.textContent = target;
+			const percent = ((data.hasil / target) * 100).toFixed(2);
+			const remaining = target - data.hasil;
 
 			percentElement.textContent = percent + '%';
 			remainingElement.textContent = remaining;
 		}
 
 		// Initial calculation
-		updatePercentageAndRemaining('sapipengqurban3kg');
-		updatePercentageAndRemaining('sapikambing2kg');
+		updateInventory('sapipengqurban3kg', {
+			hasil: {{timbang.Sapi_three_kg.hasil}},
+			target_value: {{timbang.Sapi_three_kg.target_value}}
+		});
+		updateInventory('sapikambing2kg', {
+			hasil: {{timbang.Sapi_one_kg.hasil}},
+			target_value: {{timbang.Sapi_one_kg.target_value}}
+		});
 	});
 </script>

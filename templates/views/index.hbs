@@ -33,38 +33,47 @@
         <th style="width: 140px; font-size: 25px; text-align: center;">Kurang</th>
     </tr>
     <tr>
-        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
+        <td style="font-size: 23px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
         <td id="sapipengqurban3kg-value" style="font-size: 27px; text-align: center; padding: 20px">
-            {{inventory.sapipengqurban3kg}}</td>
-        <td id="sapipengqurban3kg-target" style="font-size: 27px; text-align: center; padding: 20px">300</td>
+            {{inventory.sapipengqurban3kg.hasil}}</td>
+        <td id="sapipengqurban3kg-target" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapipengqurban3kg.target_value}}</td>
         <td id="sapipengqurban3kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
-        <td id="sapipengqurban3kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">300</td>
+        <td id="sapipengqurban3kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapipengqurban3kg.target_value}}</td>
     </tr>
     <tr>
-        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
+        <td style="font-size: 23px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
         <td id="sapikambing2kg-value" style="font-size: 27px; text-align: center; padding: 20px">
-            {{inventory.sapikambing2kg}}</td>
-        <td id="sapikambing2kg-target" style="font-size: 27px; text-align: center; padding: 20px">100</td>
+            {{inventory.sapikambing2kg.hasil}}</td>
+        <td id="sapikambing2kg-target" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapikambing2kg.target_value}}</td>
         <td id="sapikambing2kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
-        <td id="sapikambing2kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">100</td>
+        <td id="sapikambing2kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapikambing2kg.target_value}}</td>
     </tr>
     <tr>
-        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🐣 1 kg (Umum #1)</td>
+        <td style="font-size: 23px; text-align: center; padding: 20px">🐮🐣 1 kg (Umum #1)</td>
         <td id="sapicampur1kg-value" style="font-size: 27px; text-align: center; padding: 20px">
-            {{inventory.sapicampur1kg}}</td>
-        <td id="sapicampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+            {{inventory.sapicampur1kg.hasil}}</td>
+        <td id="sapicampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapicampur1kg.target_value}}</td>
         <td id="sapicampur1kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
-        <td id="sapicampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+        <td id="sapicampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapicampur1kg.target_value}}</td>
     </tr>
     <tr>
-        <td style="font-size: 27px; text-align: center; padding: 20px">🐐🐣 1 kg (Umum #2)</td>
+        <td style="font-size: 23px; text-align: center; padding: 20px">🐐🐣 1 kg (Umum #2)</td>
         <td id="kambingcampur1kg-value" style="font-size: 27px; text-align: center; padding: 20px">
-            {{inventory.kambingcampur1kg}}</td>
-        <td id="kambingcampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+            {{inventory.kambingcampur1kg.hasil}}</td>
+        <td id="kambingcampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.kambingcampur1kg.target_value}}</td>
         <td id="kambingcampur1kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
-        <td id="kambingcampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+        <td id="kambingcampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.kambingcampur1kg.target_value}}</td>
     </tr>
 </table>
+
 
 <style>
     table {
@@ -101,10 +110,10 @@
             console.log('WebSocket message received:', data);
 
             if (data.type === 'update-inventory') {
-                updateInventory('sapipengqurban3kg', data.inventory.sapipengqurban3kg, 300);
-                updateInventory('sapikambing2kg', data.inventory.sapikambing2kg, 100);
-                updateInventory('sapicampur1kg', data.inventory.sapicampur1kg, 0);
-                updateInventory('kambingcampur1kg', data.inventory.kambingcampur1kg, 0);
+                updateInventory('sapipengqurban3kg', data.inventory.sapipengqurban3kg.hasil, data.inventory.sapipengqurban3kg.target_value);
+                updateInventory('sapikambing2kg', data.inventory.sapikambing2kg.hasil, data.inventory.sapikambing2kg.target_value);
+                updateInventory('sapicampur1kg', data.inventory.sapicampur1kg.hasil, data.inventory.sapicampur1kg.target_value);
+                updateInventory('kambingcampur1kg', data.inventory.kambingcampur1kg.hasil, data.inventory.kambingcampur1kg.target_value);
             } else if (data.type === 'update-timbang') {
                 document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg;
                 document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg;
@@ -123,8 +132,10 @@
             const valueElement = document.getElementById(`${id}-value`);
             const percentElement = document.getElementById(`${id}-percent`);
             const remainingElement = document.getElementById(`${id}-remaining`);
+            const targetElement = document.getElementById(`${id}-target`);
 
             valueElement.textContent = value;
+            targetElement.textContent = target;
             const percentage = ((value / target) * 100).toFixed(2);
             percentElement.textContent = `${percentage}%`;
             remainingElement.textContent = target - value;
