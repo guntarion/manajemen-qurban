@@ -27,8 +27,19 @@ async function insertHistoryInventori(inventori_id, operation, value) {
   return result;
 }
 
+async function getInventory() {
+  const [rows] = await pool.query("SELECT * FROM inventory");
+  return rows;
+}
+
+async function getTimbang() {
+  const [rows] = await pool.query("SELECT * FROM hasil_timbang");
+  return rows;
+}
+
 module.exports = {
   insertHistoryTimbang,
   insertHistoryInventori,
+  getInventory,
+  getTimbang,
 };
-    

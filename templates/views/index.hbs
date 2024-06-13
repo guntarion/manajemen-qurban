@@ -1,4 +1,69 @@
 <div>
     <h1>Yayasan Al Muhajirin</h1>
-    <p>WhatsApp Center.</p>
+    <p>Idul Qurban 1445 H - 2024 M</p>
 </div>
+
+<h3>Komulatif Inventory</h3>
+<table id="numberInventoryFromDatabase">
+    <tr>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🐐 2</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🐣 1</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐐🐣 1</th>
+    </tr>
+    <tr>
+        <td id="sapipengqurban3kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapipengqurban3kg}}</td>
+        <td id="sapikambing2kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapikambing2kg}}</td>
+        <td id="sapicampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapicampur1kg}}</td>
+        <td id="kambingcampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.kambingcampur1kg}}</td>
+    </tr>
+</table>
+
+<style>
+	table {
+		border-collapse: collapse;
+	}
+
+	td,
+	th {
+		border-right: 1px solid #000;
+		border-left: 1px solid #000;
+	}
+
+	th:first-child,
+	td:first-child {
+		border-left: none;
+	}
+
+	th:last-child,
+	td:last-child {
+		border-right: none;
+	}
+</style>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const socket = new WebSocket('ws://localhost:5050');
+
+        socket.addEventListener('open', (event) => {
+            console.log('Index Page is Connected to WebSocket server');
+        });
+
+        socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+            console.log('WebSocket message received:', data);
+            if (data.type === 'update-inventory') {
+                document.getElementById('sapipengqurban3kg-database').textContent = data.inventory.sapipengqurban3kg;
+                document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg;
+                document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg;
+                document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg;
+            }
+        });
+
+        socket.addEventListener('close', (event) => {
+            console.log('Index Page is Disconnected from WebSocket server');
+        });
+    });
+</script>

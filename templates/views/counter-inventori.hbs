@@ -23,14 +23,37 @@
 
 	<div style="flex: 1;">
 		<h4>Select Quantity</h4>
-		<a href="#" id="button1" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="1" data-id="1" data-counter="sapipengqurban3kg-counter">1</a><br>
-		<a href="#" id="button5" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="5" data-id="2" data-counter="sapikambing2kg-counter">5</a><br>
-		<a href="#" id="button10" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="10" data-id="3" data-counter="sapicampur1kg-counter">10</a><br>
-		<a href="#" id="button15" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="15" data-id="4" data-counter="kambingcampur1kg-counter">15</a>
+		<a href="#" id="button1" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="1"
+			data-id="1" data-counter="sapipengqurban3kg-counter">1</a><br>
+		<a href="#" id="button5" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="5"
+			data-id="2" data-counter="sapikambing2kg-counter">5</a><br>
+		<a href="#" id="button10" class="button button-3d button-xlarge button-rounded button-dirtygreen"
+			data-value="10" data-id="3" data-counter="sapicampur1kg-counter">10</a><br>
+		<a href="#" id="button15" class="button button-3d button-xlarge button-rounded button-dirtygreen"
+			data-value="15" data-id="4" data-counter="kambingcampur1kg-counter">15</a>
 	</div>
 </form>
 
-<table>
+<h3>Komulatif Inventori</h3>
+<table id="numberFromDatabase">
+	<tr>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🐐 2</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🐣 1</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐐🐣 1</th>
+	</tr>
+	<tr>
+		<td id="sapipengqurban3kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapipengqurban3kg}}
+		</td>
+		<td id="sapikambing2kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapikambing2kg}}</td>
+		<td id="sapicampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapicampur1kg}}</td>
+		<td id="kambingcampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.kambingcampur1kg}}
+		</td>
+	</tr>
+</table>
+
+<h3>Your Own Counter</h3>
+<table id="counterFrontEnd">
 	<tr>
 		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
 		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🐐 2</th>
@@ -44,10 +67,14 @@
 		<td id="kambingcampur1kg-counter" style="font-size: 40px; text-align: center;">0</td>
 	</tr>
 	<tr>
-		<td style="text-align: center;"><button id="sapipengqurban3kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
-		<td style="text-align: center;"><button id="sapikambing2kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
-		<td style="text-align: center;"><button id="sapicampur1kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
-		<td style="text-align: center;"><button id="kambingcampur1kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapipengqurban3kg-decrease"
+				class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapikambing2kg-decrease"
+				class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapicampur1kg-decrease"
+				class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="kambingcampur1kg-decrease"
+				class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
 	</tr>
 </table>
 
@@ -85,6 +112,35 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
+		const socket = new WebSocket('ws://localhost:5050');
+
+		socket.addEventListener('open', (event) => {
+			console.log('Counter Inventory is Connected to WebSocket server');
+		});
+
+		socket.addEventListener('message', (event) => {
+			const data = JSON.parse(event.data);
+			console.log('WebSocket message received:', data);
+			if (data.type === 'update-inventory') {
+				document.getElementById('sapipengqurban3kg-database').textContent = data.inventory.sapipengqurban3kg;
+				document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg;
+				document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg;
+				document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg;
+			}
+		});
+
+		socket.addEventListener('close', (event) => {
+			console.log('Counter Inventory is Disconnected from WebSocket server');
+		});
+
+		// Ensure WebSocket is open before sending a message
+		function sendWebSocketMessage(data) {
+			if (socket.readyState === WebSocket.OPEN) {
+				socket.send(JSON.stringify(data));
+			} else {
+				console.log('WebSocket is not open. ReadyState:', socket.readyState);
+			}
+		}
 
 		// Add the click event listeners for the buttons
 		const buttons = document.querySelectorAll('.button');
@@ -155,6 +211,7 @@
 				historyElement.removeChild(historyElement.lastChild);
 			}
 
+			console.log('Sending AJAX request to /api/history-inventori');
 			fetch('/api/history-inventori', {
 				method: 'POST',
 				headers: {
@@ -166,13 +223,19 @@
 					value: buttonValue,
 				}),
 			})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(response => response.json())
+				.then(data => {
+					console.log('Response from /api/history-inventori:', data);
+					// Send a WebSocket message to update the counter in real-time
+					sendWebSocketMessage({
+						type: 'update-counter',
+						inventori_id: inventori_id,
+						value: currentCounterValue + buttonValue
+					});
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
 		}
 
 		function handleDecreaseClick(event) {
@@ -181,10 +244,10 @@
 			const counterId = event.target.id.replace('-decrease', '');
 			const counterElement = document.getElementById(counterId + '-counter');
 
-			if (Number(counterElement.textContent) <= 0) {
-				alert('Counter cannot go below 0.');
-				return;
-			}
+			// if (Number(counterElement.textContent) <= 0) {
+			//    alert('Counter cannot go below 0.');
+			//	return;
+			// }
 
 			counterElement.textContent = Number(counterElement.textContent) - 1;
 
@@ -224,6 +287,7 @@
 				historyElement.removeChild(historyElement.lastChild);
 			}
 
+			console.log('Sending AJAX request to /api/history-inventori');
 			fetch('/api/history-inventori', {
 				method: 'POST',
 				headers: {
@@ -235,14 +299,19 @@
 					value: 1,
 				}),
 			})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+				.then(response => response.json())
+				.then(data => {
+					console.log('Response from /api/history-inventori:', data);
+					// Send a WebSocket message to update the counter in real-time
+					sendWebSocketMessage({
+						type: 'update-counter',
+						inventori_id: inventori_id,
+						value: Number(counterElement.textContent)
+					});
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
 		}
 	});
-
 </script>
