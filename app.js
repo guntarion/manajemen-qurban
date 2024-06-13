@@ -61,8 +61,8 @@ app.use(express.static(publicDirectoryPath));
 app.use("/api", apiRoutes); // Includes messageRoutes, healthRoute
 app.use(viewRoutes); // Routes for serving HTML pages
 
-server.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+server.listen(port, '0.0.0.0', () => {
+  console.log(`Qurban Mgmt App listening at http://localhost:${port}`);
 });
 
 module.exports = app;
