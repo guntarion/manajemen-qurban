@@ -11,7 +11,7 @@ const pool = mysql
   })
   .promise();
 
-async function insertHistory(hasil_timbang_id, operation, value) {
+async function insertHistoryTimbang(hasil_timbang_id, operation, value) {
   const sql =
     "INSERT INTO timbang_history (hasil_timbang_id, operation, value) VALUES (?, ?, ?)";
   const params = [hasil_timbang_id, operation, value];
@@ -19,8 +19,16 @@ async function insertHistory(hasil_timbang_id, operation, value) {
   return result;
 }
 
+async function insertHistoryInventori(inventori_id, operation, value) {
+  const sql =
+    "INSERT INTO inventory_history (inventory_id, operation, value) VALUES (?, ?, ?)";
+  const params = [inventori_id, operation, value];
+  const [result] = await pool.execute(sql, params);
+  return result;
+}
 
 module.exports = {
-  // ... other exported functions ...
-  insertHistory,
+  insertHistoryTimbang,
+  insertHistoryInventori,
 };
+    

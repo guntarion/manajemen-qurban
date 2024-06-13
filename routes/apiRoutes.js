@@ -1,16 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
 require("dotenv").config();
 
+const {
+  insertHistoryTimbang,
+  insertHistoryInventori,
+} = require("../database/db");
 
-const { insertHistory } = require("../database/db");
-
-router.post("/history", async (req, res) => {
+router.post("/history-timbang", async (req, res) => {
   const { hasil_timbang_id, operation, value } = req.body;
   try {
-    const result = await insertHistory(hasil_timbang_id, operation, value);
+    const result = await insertHistoryTimbang(
+      hasil_timbang_id,
+      operation,
+      value
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/history-inventori", async (req, res) => {
+  const { inventori_id, operation, value } = req.body; // Ensure payload keys match
+  try {
+    const result = await insertHistoryInventori(inventori_id, operation, value);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });

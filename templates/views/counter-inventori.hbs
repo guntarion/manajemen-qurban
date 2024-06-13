@@ -1,0 +1,248 @@
+<h1>Counter Inventori</h1>
+
+<form style="display: flex;">
+	<div style="flex: 1;">
+		<h4>Select Weight</h4>
+		<div>
+			<input id="sapipengqurban3kg" class="radio-style" name="weight" type="radio" checked>
+			<label for="sapipengqurban3kg" class="radio-style-2-label">🐮 Paket Pengqurban Sapi 3 kg</label>
+		</div>
+		<div>
+			<input id="sapikambing2kg" class="radio-style" name="weight" type="radio">
+			<label for="sapikambing2kg" class="radio-style-2-label">🐮 Paket Sapi 1kg + 🐐 Kambing 1kg</label>
+		</div>
+		<div>
+			<input id="sapicampur1kg" class="radio-style" name="weight" type="radio">
+			<label for="sapicampur1kg" class="radio-style-2-label">🐮 Sapi Campur 1 kg</label>
+		</div>
+		<div>
+			<input id="kambingcampur1kg" class="radio-style" name="weight" type="radio">
+			<label for="kambingcampur1kg" class="radio-style-2-label">🐐 Kambing Campur 1 kg</label>
+		</div>
+	</div>
+
+	<div style="flex: 1;">
+		<h4>Select Quantity</h4>
+		<a href="#" id="button1" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="1" data-id="1" data-counter="sapipengqurban3kg-counter">1</a><br>
+		<a href="#" id="button5" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="5" data-id="2" data-counter="sapikambing2kg-counter">5</a><br>
+		<a href="#" id="button10" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="10" data-id="3" data-counter="sapicampur1kg-counter">10</a><br>
+		<a href="#" id="button15" class="button button-3d button-xlarge button-rounded button-dirtygreen" data-value="15" data-id="4" data-counter="kambingcampur1kg-counter">15</a>
+	</div>
+</form>
+
+<table>
+	<tr>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🐐 2</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐮🐣 1</th>
+		<th style="width: 100px; font-size: 25px; text-align: center;">🐐🐣 1</th>
+	</tr>
+	<tr>
+		<td id="sapipengqurban3kg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="sapikambing2kg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="sapicampur1kg-counter" style="font-size: 40px; text-align: center;">0</td>
+		<td id="kambingcampur1kg-counter" style="font-size: 40px; text-align: center;">0</td>
+	</tr>
+	<tr>
+		<td style="text-align: center;"><button id="sapipengqurban3kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapikambing2kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="sapicampur1kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+		<td style="text-align: center;"><button id="kambingcampur1kg-decrease" class="decrease-button button button-3d button-mini button-rounded button-teal">minus</button></td>
+	</tr>
+</table>
+
+
+<div style="margin: 20px;">
+	<h4>History Penambahan</h4>
+	<ul id="history"></ul>
+</div>
+
+
+
+<style>
+	table {
+		border-collapse: collapse;
+	}
+
+	td,
+	th {
+		border-right: 1px solid #000;
+		border-left: 1px solid #000;
+	}
+
+	th:first-child,
+	td:first-child {
+		border-left: none;
+	}
+
+	th:last-child,
+	td:last-child {
+		border-right: none;
+	}
+</style>
+
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+
+		// Add the click event listeners for the buttons
+		const buttons = document.querySelectorAll('.button');
+		buttons.forEach(button => button.addEventListener('click', handleClick));
+
+		// Add the click event listeners for the decrease buttons
+		const decreaseButtons = document.querySelectorAll('.decrease-button');
+		decreaseButtons.forEach(button => button.addEventListener('click', handleDecreaseClick));
+
+		function handleClick(event) {
+			event.preventDefault();
+
+			const selectedRadioButton = document.querySelector('input[name="weight"]:checked');
+			if (!selectedRadioButton) {
+				alert('Please select a weight first.');
+				return;
+			}
+
+			const counterId = selectedRadioButton.id;
+			const counterElement = document.getElementById(counterId + '-counter');
+			if (!counterElement) {
+				console.error('No counter element found with id:', counterId);
+				return;
+			}
+
+			const idMap = {
+				'sapipengqurban3kg': 1,
+				'sapikambing2kg': 2,
+				'sapicampur1kg': 3,
+				'kambingcampur1kg': 4,
+			};
+
+			const inventori_id = idMap[counterId];
+			if (!inventori_id) {
+				console.error('No inventori_id found for id:', counterId);
+				return;
+			}
+
+			const buttonValue = parseInt(event.target.getAttribute('data-value'), 10);
+			if (isNaN(buttonValue)) {
+				console.error('Invalid button value:', buttonValue);
+				return;
+			}
+
+			const currentCounterValue = parseInt(counterElement.textContent, 10);
+			counterElement.textContent = currentCounterValue + buttonValue;
+
+			const idToNameMap = {
+				'sapipengqurban3kg': '🐮 Sapi 3 kg',
+				'sapikambing2kg': '🐮 Sapi 1 kg',
+				'sapicampur1kg': '🐮 Sapi ½ kg',
+				'kambingcampur1kg': '🐐 Kambing ½ kg',
+			};
+
+			const name = idToNameMap[counterId];
+			if (!name) {
+				console.error('No name found for id:', counterId);
+				return;
+			}
+
+			const historyElement = document.getElementById('history');
+			const historyItem = document.createElement('li');
+			const currentTime = new Date().toLocaleTimeString();
+			historyItem.textContent = `Added ${buttonValue} to ${name} (${currentTime})`;
+			historyElement.insertBefore(historyItem, historyElement.firstChild);
+
+			while (historyElement.children.length > 20) {
+				historyElement.removeChild(historyElement.lastChild);
+			}
+
+			fetch('/api/history-inventori', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					inventori_id: inventori_id,
+					operation: 'add',
+					value: buttonValue,
+				}),
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
+		}
+
+		function handleDecreaseClick(event) {
+			event.preventDefault();
+
+			const counterId = event.target.id.replace('-decrease', '');
+			const counterElement = document.getElementById(counterId + '-counter');
+
+			if (Number(counterElement.textContent) <= 0) {
+				alert('Counter cannot go below 0.');
+				return;
+			}
+
+			counterElement.textContent = Number(counterElement.textContent) - 1;
+
+			const idMap = {
+				'sapipengqurban3kg': 1,
+				'sapikambing2kg': 2,
+				'sapicampur1kg': 3,
+				'kambingcampur1kg': 4,
+			};
+
+			const inventori_id = idMap[counterId];
+			if (!inventori_id) {
+				console.error('No inventori_id found for id:', counterId);
+				return;
+			}
+
+			const idToNameMap = {
+				'sapipengqurban3kg': '🐮 Sapi 3 kg',
+				'sapikambing2kg': '🐮 Sapi 1 kg',
+				'sapicampur1kg': '🐮 Sapi ½ kg',
+				'kambingcampur1kg': '🐐 Kambing ½ kg',
+			};
+
+			const name = idToNameMap[counterId];
+			if (!name) {
+				console.error('No name found for id:', counterId);
+				return;
+			}
+
+			const historyElement = document.getElementById('history');
+			const historyItem = document.createElement('li');
+			const currentTime = new Date().toLocaleTimeString();
+			historyItem.textContent = `Decreased 1 from ${name} (${currentTime})`;
+			historyElement.insertBefore(historyItem, historyElement.firstChild);
+
+			while (historyElement.children.length > 20) {
+				historyElement.removeChild(historyElement.lastChild);
+			}
+
+			fetch('/api/history-inventori', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					inventori_id: inventori_id,
+					operation: 'decrease',
+					value: 1,
+				}),
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
+		}
+	});
+
+</script>

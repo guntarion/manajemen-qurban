@@ -18,5 +18,10 @@ router.get("/counter-timbang", (req, res) => {
   res.render("counter-timbang", { title: "Counter Timbang" });
 });
 
+router.get("/counter-inventori", (req, res) => {
+  res.render("counter-inventori", { title: "Counter Inventori" });
+});
+
+
 
 module.exports = router;
