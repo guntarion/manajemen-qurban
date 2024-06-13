@@ -158,7 +158,8 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
-		const socket = new WebSocket('ws://localhost:5050');
+		// const socket = new WebSocket('ws://localhost:5050');
+		const socket = new WebSocket('ws://68.183.186.142:5050');
 
 		socket.addEventListener('open', (event) => {
 			console.log('Counter Timbang is Connected to WebSocket server');
