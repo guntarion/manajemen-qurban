@@ -3,45 +3,90 @@
     <p>Idul Qurban 1445 H - 2024 M</p>
 </div>
 
+<h3>Komulatif Timbang</h3>
+<table id="numberTimbangFromDatabase">
+    <tr>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮 3</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮 1</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐮 ½</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐐 ½</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🐣 ½</th>
+        <th style="width: 100px; font-size: 25px; text-align: center;">🪺</th>
+    </tr>
+    <tr>
+        <td id="sapi3kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_three_kg}}</td>
+        <td id="sapi1kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_one_kg}}</td>
+        <td id="sapiHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_half_kg}}</td>
+        <td id="kambingHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Kambing_half_kg}}</td>
+        <td id="campurHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Campur_half_kg}}</td>
+        <td id="jeroan-database" style="font-size: 40px; text-align: center;">{{timbang.Jeroan}}</td>
+    </tr>
+</table>
+
 <h3>Komulatif Inventory</h3>
 <table id="numberInventoryFromDatabase">
     <tr>
-        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🙂 3</th>
-        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🐐 2</th>
-        <th style="width: 100px; font-size: 25px; text-align: center;">🐮🐣 1</th>
-        <th style="width: 100px; font-size: 25px; text-align: center;">🐐🐣 1</th>
+        <th style="width: 400px; font-size: 25px; text-align: center;">Jenis</th>
+        <th style="width: 140px; font-size: 25px; text-align: center;">Kuanti</th>
+        <th style="width: 140px; font-size: 25px; text-align: center;">Target</th>
+        <th style="width: 140px; font-size: 25px; text-align: center;">Prosen</th>
+        <th style="width: 140px; font-size: 25px; text-align: center;">Kurang</th>
     </tr>
     <tr>
-        <td id="sapipengqurban3kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapipengqurban3kg}}</td>
-        <td id="sapikambing2kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapikambing2kg}}</td>
-        <td id="sapicampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.sapicampur1kg}}</td>
-        <td id="kambingcampur1kg-database" style="font-size: 40px; text-align: center;">{{inventory.kambingcampur1kg}}</td>
+        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
+        <td id="sapipengqurban3kg-value" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapipengqurban3kg}}</td>
+        <td id="sapipengqurban3kg-target" style="font-size: 27px; text-align: center; padding: 20px">300</td>
+        <td id="sapipengqurban3kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
+        <td id="sapipengqurban3kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">300</td>
+    </tr>
+    <tr>
+        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
+        <td id="sapikambing2kg-value" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapikambing2kg}}</td>
+        <td id="sapikambing2kg-target" style="font-size: 27px; text-align: center; padding: 20px">100</td>
+        <td id="sapikambing2kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
+        <td id="sapikambing2kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">100</td>
+    </tr>
+    <tr>
+        <td style="font-size: 27px; text-align: center; padding: 20px">🐮🐣 1 kg (Umum #1)</td>
+        <td id="sapicampur1kg-value" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.sapicampur1kg}}</td>
+        <td id="sapicampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+        <td id="sapicampur1kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
+        <td id="sapicampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+    </tr>
+    <tr>
+        <td style="font-size: 27px; text-align: center; padding: 20px">🐐🐣 1 kg (Umum #2)</td>
+        <td id="kambingcampur1kg-value" style="font-size: 27px; text-align: center; padding: 20px">
+            {{inventory.kambingcampur1kg}}</td>
+        <td id="kambingcampur1kg-target" style="font-size: 27px; text-align: center; padding: 20px">0</td>
+        <td id="kambingcampur1kg-percent" style="font-size: 27px; text-align: center; padding: 20px">0%</td>
+        <td id="kambingcampur1kg-remaining" style="font-size: 27px; text-align: center; padding: 20px">0</td>
     </tr>
 </table>
 
 <style>
-	table {
-		border-collapse: collapse;
-	}
+    table {
+        border-collapse: collapse;
+    }
 
-	td,
-	th {
-		border-right: 1px solid #000;
-		border-left: 1px solid #000;
-	}
+    td,
+    th {
+        border-right: 1px solid #000;
+        border-left: 1px solid #000;
+    }
 
-	th:first-child,
-	td:first-child {
-		border-left: none;
-	}
+    th:first-child,
+    td:first-child {
+        border-left: none;
+    }
 
-	th:last-child,
-	td:last-child {
-		border-right: none;
-	}
+    th:last-child,
+    td:last-child {
+        border-right: none;
+    }
 </style>
-
-
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -54,16 +99,35 @@
         socket.addEventListener('message', (event) => {
             const data = JSON.parse(event.data);
             console.log('WebSocket message received:', data);
+
             if (data.type === 'update-inventory') {
-                document.getElementById('sapipengqurban3kg-database').textContent = data.inventory.sapipengqurban3kg;
-                document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg;
-                document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg;
-                document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg;
+                updateInventory('sapipengqurban3kg', data.inventory.sapipengqurban3kg, 300);
+                updateInventory('sapikambing2kg', data.inventory.sapikambing2kg, 100);
+                updateInventory('sapicampur1kg', data.inventory.sapicampur1kg, 0);
+                updateInventory('kambingcampur1kg', data.inventory.kambingcampur1kg, 0);
+            } else if (data.type === 'update-timbang') {
+                document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg;
+                document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg;
+                document.getElementById('sapiHalfKg-database').textContent = data.timbang.Sapi_half_kg;
+                document.getElementById('kambingHalfKg-database').textContent = data.timbang.Kambing_half_kg;
+                document.getElementById('campurHalfKg-database').textContent = data.timbang.Campur_half_kg;
+                document.getElementById('jeroan-database').textContent = data.timbang.Jeroan;
             }
         });
 
         socket.addEventListener('close', (event) => {
             console.log('Index Page is Disconnected from WebSocket server');
         });
+
+        function updateInventory(id, value, target) {
+            const valueElement = document.getElementById(`${id}-value`);
+            const percentElement = document.getElementById(`${id}-percent`);
+            const remainingElement = document.getElementById(`${id}-remaining`);
+
+            valueElement.textContent = value;
+            const percentage = ((value / target) * 100).toFixed(2);
+            percentElement.textContent = `${percentage}%`;
+            remainingElement.textContent = target - value;
+        }
     });
 </script>

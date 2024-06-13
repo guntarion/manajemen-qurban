@@ -1,5 +1,32 @@
 <h1>Counter Inventori</h1>
 
+<h3>Komulatif Inventory</h3>
+<table id="numberInventoryFromDatabase">
+	<tr>
+		<th style="width: 300px; font-size: 21px; text-align: center;">Jenis</th>
+		<th style="width: 100px; font-size: 21px; text-align: center;">Kuanti</th>
+		<th style="width: 100px; font-size: 21px; text-align: center;">Target</th>
+		<th style="width: 100px; font-size: 21px; text-align: center;">Prosen</th>
+		<th style="width: 100px; font-size: 21px; text-align: center;">Kurang</th>
+	</tr>
+	<tr>
+		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
+		<td id="sapipengqurban3kg-value" style="font-size: 21px; text-align: center; padding: 20px">
+			{{inventory.sapipengqurban3kg}}</td>
+		<td id="sapipengqurban3kg-target" style="font-size: 21px; text-align: center; padding: 20px">400</td>
+		<td id="sapipengqurban3kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+		<td id="sapipengqurban3kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">300</td>
+	</tr>
+	<tr>
+		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🐐 2 kg (Panitia)</td>
+		<td id="sapikambing2kg-value" style="font-size: 21px; text-align: center; padding: 20px">
+			{{inventory.sapikambing2kg}}</td>
+		<td id="sapikambing2kg-target" style="font-size: 21px; text-align: center; padding: 20px">100</td>
+		<td id="sapikambing2kg-percent" style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+		<td id="sapikambing2kg-remaining" style="font-size: 21px; text-align: center; padding: 20px">100</td>
+	</tr>
+</table>
+
 <form style="display: flex;">
 	<div style="flex: 1;">
 		<h4>Select Weight</h4>
@@ -78,13 +105,10 @@
 	</tr>
 </table>
 
-
 <div style="margin: 20px;">
 	<h4>History Penambahan</h4>
 	<ul id="history"></ul>
 </div>
-
-
 
 <style>
 	table {
@@ -108,8 +132,6 @@
 	}
 </style>
 
-
-
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
 		const socket = new WebSocket('ws://localhost:5050');
@@ -126,6 +148,17 @@
 				document.getElementById('sapikambing2kg-database').textContent = data.inventory.sapikambing2kg;
 				document.getElementById('sapicampur1kg-database').textContent = data.inventory.sapicampur1kg;
 				document.getElementById('kambingcampur1kg-database').textContent = data.inventory.kambingcampur1kg;
+
+				// Update the detailed inventory table
+				document.getElementById('sapipengqurban3kg-value').textContent = data.inventory.sapipengqurban3kg;
+				const sapipengqurban3kgTarget = document.getElementById('sapipengqurban3kg-target').textContent;
+				document.getElementById('sapipengqurban3kg-percent').textContent = ((data.inventory.sapipengqurban3kg / sapipengqurban3kgTarget) * 100).toFixed(2) + '%';
+				document.getElementById('sapipengqurban3kg-remaining').textContent = sapipengqurban3kgTarget - data.inventory.sapipengqurban3kg;
+
+				document.getElementById('sapikambing2kg-value').textContent = data.inventory.sapikambing2kg;
+				const sapikambing2kgTarget = document.getElementById('sapikambing2kg-target').textContent;
+				document.getElementById('sapikambing2kg-percent').textContent = ((data.inventory.sapikambing2kg / sapikambing2kgTarget) * 100).toFixed(2) + '%';
+				document.getElementById('sapikambing2kg-remaining').textContent = sapikambing2kgTarget - data.inventory.sapikambing2kg;
 			}
 		});
 
@@ -243,11 +276,6 @@
 
 			const counterId = event.target.id.replace('-decrease', '');
 			const counterElement = document.getElementById(counterId + '-counter');
-
-			// if (Number(counterElement.textContent) <= 0) {
-			//    alert('Counter cannot go below 0.');
-			//	return;
-			// }
 
 			counterElement.textContent = Number(counterElement.textContent) - 1;
 

@@ -5,8 +5,28 @@ const path = require("path");
 const { getInventory, getTimbang } = require("../database/db");
 
 // Page routes
-router.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
+router.get("/", async (req, res) => {
+  try {
+    const inventory = await getInventory();
+    const inventoryMap = {};
+    inventory.forEach((item) => {
+      inventoryMap[item.name] = item.hasil;
+    });
+
+    const timbang = await getTimbang();
+    const timbangMap = {};
+    timbang.forEach((item) => {
+      timbangMap[item.name] = item.hasil;
+    });
+
+    res.render("index", {
+      title: "Home",
+      inventory: inventoryMap,
+      timbang: timbangMap,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.get("/forms", (req, res) => {
