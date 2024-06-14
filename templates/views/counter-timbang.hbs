@@ -261,7 +261,7 @@
 			const historyElement = document.getElementById('history');
 			const historyItem = document.createElement('li');
 			const currentTime = new Date().toLocaleTimeString();
-			historyItem.textContent = `Added ${buttonValue} to ${name} (${currentTime})`;
+			historyItem.textContent = `🔵➕ ${buttonValue} to ${name} (${currentTime})`;
 			historyElement.insertBefore(historyItem, historyElement.firstChild);
 
 			while (historyElement.children.length > 20) {
@@ -336,7 +336,7 @@
 			const historyElement = document.getElementById('history');
 			const historyItem = document.createElement('li');
 			const currentTime = new Date().toLocaleTimeString();
-			historyItem.textContent = `Decreased 1 from ${name} (${currentTime})`;
+			historyItem.textContent = `🔴➖ 1 from ${name} (${currentTime})`;
 			historyElement.insertBefore(historyItem, historyElement.firstChild);
 
 			while (historyElement.children.length > 20) {
