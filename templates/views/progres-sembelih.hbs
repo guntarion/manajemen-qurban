@@ -1,0 +1,99 @@
+<head>
+    <link rel="stylesheet" href="css/bs-switches.css">
+</head>
+
+<table>
+    <tbody>
+        <tr>
+            <td>🐮 1</td>
+            <td><input id="switch-sapi-1" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-1" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 2</td>
+            <td><input id="switch-sapi-2" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-2" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 3</td>
+            <td><input id="switch-sapi-3" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-3" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 4</td>
+            <td><input id="switch-sapi-4" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-4" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 5</td>
+            <td><input id="switch-sapi-5" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-5" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 6</td>
+            <td><input id="switch-sapi-6" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-6" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 7</td>
+            <td><input id="switch-sapi-7" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-7" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 8</td>
+            <td><input id="switch-sapi-8" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-8" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 9</td>
+            <td><input id="switch-sapi-9" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-9" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+        <tr>
+            <td>🐮 10</td>
+            <td><input id="switch-sapi-10" class="bt-switch" type="checkbox" data-on-text="Sudah" data-off-text="Belum">
+            </td>
+            <td><button id="sapi-send-10" type="button" class="btn btn-success" disabled>Send</button></td>
+        </tr>
+    </tbody>
+</table>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/bs-switches.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the switch with bootstrapSwitch
+            // jQuery(".bt-switch").bootstrapSwitch();
+
+            // Initialize the switch and button
+            var switchElement_1 = jQuery('#switch-sapi-1');
+            var sendButton_1 = document.getElementById('sapi-send-1');
+
+            var switchElement_2 = jQuery('#switch-sapi-2');
+            var sendButton_2 = document.getElementById('sapi-send-2');
+
+            var switchElement_3 = jQuery('#switch-sapi-3');
+            var sendButton_3 = document.getElementById('sapi-send-3');
+
+            switchElement_1.on('switchChange.bootstrapSwitch', function (event, state) {
+                sendButton_1.disabled = !state;
+            });
+            switchElement_2.on('switchChange.bootstrapSwitch', function (event, state) {
+                sendButton_2.disabled = !state;
+            });
+            switchElement_3.on('switchChange.bootstrapSwitch', function (event, state) {
+                sendButton_3.disabled = !state;
+            });
+
+
+        });
+    </script>

@@ -36,8 +36,8 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/forms", (req, res) => {
-  res.render("forms", { title: "Forms" });
+router.get("/progres-sembelih", (req, res) => {
+  res.render("progres-sembelih", { title: "Progres Sembelih" });
 });
 
 router.get("/counter-timbang", async (req, res) => {
