@@ -3,11 +3,11 @@
 <h3>Capaian Timbang</h3>
 <table id="numberInventoryFromDatabase">
 	<tr>
-		<th style="width: 300px; font-size: 21px; text-align: center;">Jenis</th>
-		<th style="width: 100px; font-size: 21px; text-align: center;">Kuanti</th>
-		<th style="width: 100px; font-size: 21px; text-align: center;">Target</th>
-		<th style="width: 100px; font-size: 21px; text-align: center;">Prosen</th>
-		<th style="width: 100px; font-size: 21px; text-align: center;">Kurang</th>
+		<th style="width: 100px; font-size: 15px; text-align: center;">Jenis</th>
+		<th style="width: 60px; font-size: 15px; text-align: center;">Kuanti</th>
+		<th style="width: 60px; font-size: 15px; text-align: center;">Target</th>
+		<th style="width: 60px; font-size: 15px; text-align: center;">Prosen</th>
+		<th style="width: 60px; font-size: 15px; text-align: center;">Kurang</th>
 	</tr>
 	<tr>
 		<td style="font-size: 21px; text-align: center; padding: 20px">🐮🙂 3 kg (Pengqurban)</td>
@@ -158,8 +158,8 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
-		// const socket = new WebSocket('ws://localhost:5050');
-		const socket = new WebSocket('ws://68.183.186.142:5050');
+		const serverAddress = "{{wsUrl}}";
+		const socket = new WebSocket(serverAddress);		
 
 		socket.addEventListener('open', (event) => {
 			console.log('Counter Timbang is Connected to WebSocket server');

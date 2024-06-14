@@ -7,30 +7,34 @@ const { getInventory, getTimbang } = require("../database/db");
 // Page routes
 router.get("/", async (req, res) => {
   try {
-      const inventory = await getInventory();
-      const inventoryMap = {};
-      inventory.forEach((item) => {
-        inventoryMap[item.name] = {
-          hasil: item.hasil,
-          target_value: item.target_value,
-        };
-      });
+    const inventory = await getInventory();
+    const inventoryMap = {};
+    inventory.forEach((item) => {
+      inventoryMap[item.name] = {
+        hasil: item.hasil,
+        target_value: item.target_value,
+      };
+    });
 
     const timbang = await getTimbang();
     const timbangMap = {};
     timbang.forEach((item) => {
-      timbangMap[item.name] = item.hasil;
+      timbangMap[item.name] = {
+        hasil: item.hasil,
+      };
     });
 
     res.render("index", {
       title: "Home",
       inventory: inventoryMap,
       timbang: timbangMap,
+      wsUrl: process.env.NODE_ENV === 'production' ? 'ws://68.183.186.142:5050' : 'ws://localhost:5050',
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 router.get("/forms", (req, res) => {
   res.render("forms", { title: "Forms" });

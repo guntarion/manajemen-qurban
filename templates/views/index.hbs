@@ -3,6 +3,97 @@
     <p>Idul Qurban 1445 H - 2024 M</p>
 </div>
 
+<h3>Proses Sembelih</h3>
+<table id="statusSapi"> 
+    <thead>
+        <tr>
+            <th>🐮1</th>
+            <th>🐮2</th>
+            <th>🐮3</th>
+            <th>🐮4</th>
+            <th>🐮5</th>
+            <th>🐮6</th>
+            <th>🐮7</th>
+            <th>🐮8</th>
+            <th>🐮9</th>
+            <th>🐮10</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="S1">✅</td>
+            <td id="S2">✅</td>
+            <td id="S3">✅</td>
+            <td id="S4">✅</td>
+            <td id="S5">✅</td>
+            <td id="S6">⬜️</td>
+            <td id="S7">⬜️</td>
+            <td id="S8">⬜️</td>
+            <td id="S9">⬜️</td>
+            <td id="S10">⬜️</td>
+        </tr>
+        <tr>
+            <td id="S11">⬜️</td>
+            <td id="S12">⬜️</td>
+            <td id="S13">⬜️</td>
+            <td id="S14">⬜️</td>
+            <td id="S15">⬜️</td>
+            <td id="S16">⬜️</td>
+            <td id="S17">⬜️</td>
+            <td id="S18">⬜️</td>
+            <td id="S19">⬜️</td>
+            <td id="S20">⬜️</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<table id="statusKambing">
+    <thead>
+        <tr>
+            <th>🐐1</th>
+            <th>🐐2</th>
+            <th>🐐3</th>
+            <th>🐐4</th>
+            <th>🐐5</th>
+            <th>🐐6</th>
+            <th>🐐7</th>
+            <th>🐐8</th>
+            <th>🐐9</th>
+            <th>🐐10</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="S1">✅</td>
+            <td id="S2">✅</td>
+            <td id="S3">✅</td>
+            <td id="S4">✅</td>
+            <td id="S5">✅</td>
+            <td id="S6">✅</td>
+            <td id="S7">✅</td>
+            <td id="S8">✅</td>
+            <td id="S9">⬜️</td>
+            <td id="S10">⬜️</td>
+        </tr>
+        <tr>
+            <td id="S11">⬜️</td>
+            <td id="S12">⬜️</td>
+            <td id="S13">⬜️</td>
+            <td id="S14">⬜️</td>
+            <td id="S15">⬜️</td>
+            <td id="S16">⬜️</td>
+            <td id="S17">⬜️</td>
+            <td id="S18">⬜️</td>
+            <td id="S19">⬜️</td>
+            <td id="S10">⬜️</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
 <h3>Komulatif Timbang</h3>
 <table id="numberTimbangFromDatabase">
     <tr>
@@ -14,14 +105,16 @@
         <th style="width: 100px; font-size: 25px; text-align: center;">🪺</th>
     </tr>
     <tr>
-        <td id="sapi3kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_three_kg}}</td>
-        <td id="sapi1kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_one_kg}}</td>
-        <td id="sapiHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_half_kg}}</td>
-        <td id="kambingHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Kambing_half_kg}}</td>
-        <td id="campurHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Campur_half_kg}}</td>
-        <td id="jeroan-database" style="font-size: 40px; text-align: center;">{{timbang.Jeroan}}</td>
+        <td id="sapi3kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_three_kg.hasil}}</td>
+        <td id="sapi1kg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_one_kg.hasil}}</td>
+        <td id="sapiHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Sapi_half_kg.hasil}}</td>
+        <td id="kambingHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Kambing_half_kg.hasil}}</td>
+        <td id="campurHalfKg-database" style="font-size: 40px; text-align: center;">{{timbang.Campur_half_kg.hasil}}</td>
+        <td id="jeroan-database" style="font-size: 40px; text-align: center;">{{timbang.Jeroan.hasil}}</td>
     </tr>
 </table>
+
+
 
 <h3>Komulatif Inventory</h3>
 <table id="numberInventoryFromDatabase">
@@ -75,7 +168,58 @@
 </table>
 
 
+<h3>Distribusi</h3>
+
+<table>
+    <tr>
+        <th style="width: 200px; font-size: 21px; text-align: center;">Kategori</th>
+        <th style="width: 100px; font-size: 21px; text-align: center;">Target</th>
+        <th style="width: 100px; font-size: 21px; text-align: center;">Terealisasi</th>
+        <th style="width: 100px; font-size: 21px; text-align: center;">Progress</th>
+    </tr>
+    <tr>
+        <td style="font-size: 21px; text-align: center; padding: 20px">Pengqurban Sapi</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+    </tr>
+    <tr>
+        <td style="font-size: 21px; text-align: center; padding: 20px">Pengqurban Kambing</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+    </tr>
+    <tr>
+        <td style="font-size: 21px; text-align: center; padding: 20px">Panitia</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+    </tr>
+    <tr>
+        <td style="font-size: 21px; text-align: center; padding: 20px">RT RW</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+    </tr>
+    <tr>
+        <td style="font-size: 21px; text-align: center; padding: 20px">Lembaga</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0</td>
+        <td style="font-size: 21px; text-align: center; padding: 20px">0%</td>
+    </tr>
+</table>
+
+
+
+
 <style>
+
+    #statusSapi th, #statusSapi td, #statusKambing th, #statusKambing td {
+        width: 90px;
+        font-size: 25px;
+        text-align: center;
+    }
+
     table {
         border-collapse: collapse;
     }
@@ -99,7 +243,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        const socket = new WebSocket('ws://localhost:5050');
+        const serverAddress = "{{wsUrl}}";
+        const socket = new WebSocket(serverAddress);
 
         socket.addEventListener('open', (event) => {
             console.log('Index Page is Connected to WebSocket server');
@@ -115,12 +260,12 @@
                 updateInventory('sapicampur1kg', data.inventory.sapicampur1kg.hasil, data.inventory.sapicampur1kg.target_value);
                 updateInventory('kambingcampur1kg', data.inventory.kambingcampur1kg.hasil, data.inventory.kambingcampur1kg.target_value);
             } else if (data.type === 'update-timbang') {
-                document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg;
-                document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg;
-                document.getElementById('sapiHalfKg-database').textContent = data.timbang.Sapi_half_kg;
-                document.getElementById('kambingHalfKg-database').textContent = data.timbang.Kambing_half_kg;
-                document.getElementById('campurHalfKg-database').textContent = data.timbang.Campur_half_kg;
-                document.getElementById('jeroan-database').textContent = data.timbang.Jeroan;
+                document.getElementById('sapi3kg-database').textContent = data.timbang.Sapi_three_kg.hasil;
+                document.getElementById('sapi1kg-database').textContent = data.timbang.Sapi_one_kg.hasil;
+                document.getElementById('sapiHalfKg-database').textContent = data.timbang.Sapi_half_kg.hasil;
+                document.getElementById('kambingHalfKg-database').textContent = data.timbang.Kambing_half_kg.hasil;
+                document.getElementById('campurHalfKg-database').textContent = data.timbang.Campur_half_kg.hasil;
+                document.getElementById('jeroan-database').textContent = data.timbang.Jeroan.hasil;
             }
         });
 

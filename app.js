@@ -57,6 +57,13 @@ app.set("views", viewsPath);
 const publicDirectoryPath = path.join(__dirname, "./public");
 app.use(express.static(publicDirectoryPath));
 
+// Middleware to set the WebSocket URL
+app.use((req, res, next) => {
+  const wsUrl = process.env.NODE_ENV === 'production' ? process.env.WS_URL_PROD : process.env.WS_URL_DEV;
+  res.locals.wsUrl = wsUrl;
+  next();
+});
+
 // Mount routes
 app.use("/api", apiRoutes); // Includes messageRoutes, healthRoute
 app.use(viewRoutes); // Routes for serving HTML pages
