@@ -10,6 +10,7 @@ const {
   insertHistoryTimbang,
   insertHistoryInventori,
   updateSembelih,
+  getInventory,
 } = require("../database/db");
 
 router.post("/history-timbang", async (req, res) => {
@@ -54,6 +55,18 @@ router.post("/update-sembelih", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Define a route to get inventory data
+router.get('/inventory', async (req, res) => {
+  try {
+    const inventory = await getInventory();
+    res.json(inventory);
+  } catch (error) {
+    console.error('Error fetching inventory:', error);
+    res.status(500).json({ error: 'Failed to fetch inventory' });
+  }
+});
+
 
 
 module.exports = router;
