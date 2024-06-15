@@ -38,9 +38,17 @@ async function getTimbang() {
   return rows;
 }
 
+async function updateSembelih(id, sembelih) {
+  const sql = "UPDATE progres_sapi SET sembelih = ? WHERE id = ?";
+  const params = [sembelih, id];
+  const [result] = await pool.execute(sql, params);
+  return result;
+}
+
 module.exports = {
   insertHistoryTimbang,
   insertHistoryInventori,
   getInventory,
   getTimbang,
+  updateSembelih,
 };

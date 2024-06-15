@@ -4,93 +4,53 @@
 </div>
 
 <h3>Proses Sembelih</h3>
-<table id="statusSapi"> 
+<table id="statusSapi">
     <thead>
         <tr>
-            <th>🐮1</th>
-            <th>🐮2</th>
-            <th>🐮3</th>
-            <th>🐮4</th>
-            <th>🐮5</th>
-            <th>🐮6</th>
-            <th>🐮7</th>
-            <th>🐮8</th>
-            <th>🐮9</th>
-            <th>🐮10</th>
+            {{#each (range 1 10) as |i|}}
+            <th>🐮{{i}}</th>
+            {{/each}}
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td id="S1">✅</td>
-            <td id="S2">✅</td>
-            <td id="S3">✅</td>
-            <td id="S4">✅</td>
-            <td id="S5">✅</td>
-            <td id="S6">⬜️</td>
-            <td id="S7">⬜️</td>
-            <td id="S8">⬜️</td>
-            <td id="S9">⬜️</td>
-            <td id="S10">⬜️</td>
+            {{#each (range 1 10) as |i|}}
+            <td id="S{{i}}">⬜️</td>
+            {{/each}}
         </tr>
         <tr>
-            <td id="S11">⬜️</td>
-            <td id="S12">⬜️</td>
-            <td id="S13">⬜️</td>
-            <td id="S14">⬜️</td>
-            <td id="S15">⬜️</td>
-            <td id="S16">⬜️</td>
-            <td id="S17">⬜️</td>
-            <td id="S18">⬜️</td>
-            <td id="S19">⬜️</td>
-            <td id="S20">⬜️</td>
+            {{#each (range 11 20) as |i|}}
+            <td id="S{{i}}">⬜️</td>
+            {{/each}}
         </tr>
     </tbody>
 </table>
 
 
 
+<h3>Proses Sembelih Kambing</h3>
 <table id="statusKambing">
     <thead>
         <tr>
-            <th>🐐1</th>
-            <th>🐐2</th>
-            <th>🐐3</th>
-            <th>🐐4</th>
-            <th>🐐5</th>
-            <th>🐐6</th>
-            <th>🐐7</th>
-            <th>🐐8</th>
-            <th>🐐9</th>
-            <th>🐐10</th>
+            {{#each (range 1 10) as |i|}}
+            <th>🐐{{i}}</th>
+            {{/each}}
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td id="S1">✅</td>
-            <td id="S2">✅</td>
-            <td id="S3">✅</td>
-            <td id="S4">✅</td>
-            <td id="S5">✅</td>
-            <td id="S6">✅</td>
-            <td id="S7">✅</td>
-            <td id="S8">✅</td>
-            <td id="S9">⬜️</td>
-            <td id="S10">⬜️</td>
+            {{#each (range 1 10) as |i|}}
+            <td id="K{{i}}">⬜️</td>
+            {{/each}}
         </tr>
         <tr>
-            <td id="S11">⬜️</td>
-            <td id="S12">⬜️</td>
-            <td id="S13">⬜️</td>
-            <td id="S14">⬜️</td>
-            <td id="S15">⬜️</td>
-            <td id="S16">⬜️</td>
-            <td id="S17">⬜️</td>
-            <td id="S18">⬜️</td>
-            <td id="S19">⬜️</td>
-            <td id="S10">⬜️</td>
+            {{#each (range 11 20) as |i|}}
+            <td id="K{{i}}">⬜️</td>
+            {{/each}}
         </tr>
     </tbody>
 </table>
+
 
 
 
@@ -285,5 +245,30 @@
             percentElement.textContent = `${percentage}%`;
             remainingElement.textContent = target - value;
         }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const socket = new WebSocket("{{wsUrl}}");
+
+        socket.addEventListener('open', () => {
+            console.log("Connected to WebSocket server");
+        });
+
+        socket.addEventListener('close', () => {
+            console.log("Disconnected from WebSocket server");
+        });
+
+        socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+            if (data.type === "update-sembelih") {
+                const cell = document.getElementById('S' + data.id);
+                cell.textContent = data.sembelih ? '✅' : '⬜️';
+            } else if (data.type === "update-sembelih-kambing") {
+                const cell = document.getElementById('K' + data.id);
+                cell.textContent = data.sembelih ? '✅' : '⬜️';
+            }
+        });
     });
 </script>

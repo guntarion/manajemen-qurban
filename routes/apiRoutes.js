@@ -9,6 +9,7 @@ const {
 const {
   insertHistoryTimbang,
   insertHistoryInventori,
+  updateSembelih,
 } = require("../database/db");
 
 router.post("/history-timbang", async (req, res) => {
@@ -40,5 +41,19 @@ router.post("/history-inventori", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Route to handle updating the sembelih field
+router.post("/update-sembelih", async (req, res) => {
+  const { id, sembelih } = req.body;
+  console.log("Received /update-sembelih request:", req.body);
+  try {
+    const result = await updateSembelih(id, sembelih);
+    res.json(result);
+  } catch (err) {
+    console.error("Error handling /update-sembelih request:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 module.exports = router;

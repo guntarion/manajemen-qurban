@@ -35,6 +35,13 @@ const hbs = engine({
   layoutsDir: layoutsPath, // path to layouts folder
   partialsDir: partialsPath, // path to partials folder
   helpers: {
+    range: function(start, end) {
+      let result = [];
+      for (let i = start; i <= end; i++) {
+        result.push(i);
+      }
+      return result;
+    },
     truncate: function (str, numWords) {
       var words = str.split(" ");
       if (words.length > numWords) {
@@ -59,7 +66,10 @@ app.use(express.static(publicDirectoryPath));
 
 // Middleware to set the WebSocket URL
 app.use((req, res, next) => {
-  const wsUrl = process.env.NODE_ENV === 'production' ? process.env.WS_URL_PROD : process.env.WS_URL_DEV;
+  const wsUrl =
+    process.env.NODE_ENV === "production"
+      ? process.env.WS_URL_PROD
+      : process.env.WS_URL_DEV;
   res.locals.wsUrl = wsUrl;
   next();
 });
@@ -68,7 +78,7 @@ app.use((req, res, next) => {
 app.use("/api", apiRoutes); // Includes messageRoutes, healthRoute
 app.use(viewRoutes); // Routes for serving HTML pages
 
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, "0.0.0.0", () => {
   console.log(`Qurban Mgmt App listening at http://localhost:${port}`);
 });
 
