@@ -11,6 +11,18 @@ const pool = mysql
   })
   .promise();
 
+async function checkDatabaseConnection() {
+  try {
+    const [rows] = await pool.query("SELECT 1");
+    console.log("Database is alive");
+    return true;
+  } catch (error) {
+    console.error("Database connection error:", error);
+    return false;
+  }
+}
+
+
 async function insertHistoryTimbang(hasil_timbang_id, operation, value) {
   const sql =
     "INSERT INTO timbang_history (hasil_timbang_id, operation, value) VALUES (?, ?, ?)";
@@ -46,6 +58,7 @@ async function updateSembelih(id, sembelih) {
 }
 
 module.exports = {
+  checkDatabaseConnection,
   insertHistoryTimbang,
   insertHistoryInventori,
   getInventory,
