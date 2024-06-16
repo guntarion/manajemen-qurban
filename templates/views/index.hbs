@@ -1,9 +1,3 @@
-<div>
-    <h1>Yayasan Al Muhajirin</h1>
-    <p>Idul Qurban 1445 H - 2024 M</p>
-</div>
-
-<h3>Proses Sembelih</h3>
 <table id="statusSapi">
     <thead>
         <tr>
@@ -27,31 +21,32 @@
 </table>
 
 
-
-<h3>Proses Sembelih Kambing</h3>
 <table id="statusKambing">
     <thead>
         <tr>
-            {{#each (range 1 10) as |i|}}
+            {{#each (range 1 15) as |i|}}
             <th>🐐{{i}}</th>
             {{/each}}
         </tr>
     </thead>
     <tbody>
         <tr>
-            {{#each (range 1 10) as |i|}}
+            {{#each (range 1 15) as |i|}}
             <td id="K{{i}}">⬜️</td>
             {{/each}}
         </tr>
         <tr>
-            {{#each (range 11 20) as |i|}}
+            {{#each (range 16 30) as |i|}}
+            <td id="K{{i}}">⬜️</td>
+            {{/each}}
+        </tr>
+        <tr>
+            {{#each (range 31 45) as |i|}}
             <td id="K{{i}}">⬜️</td>
             {{/each}}
         </tr>
     </tbody>
 </table>
-
-
 
 
 <h3>Komulatif Timbang</h3>

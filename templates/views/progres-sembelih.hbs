@@ -12,8 +12,7 @@
                         <tr>
                             <td>🐮 {{i}}</td>
                             <td><input id="switch-sapi-{{i}}" class="bt-switch" type="checkbox" data-on-text="Sudah"
-                                    data-off-text="Belum">
-                            </td>
+                                    data-off-text="Belum"></td>
                             <td><button id="sapi-send-{{i}}" type="button" class="btn btn-success"
                                     disabled>Send</button></td>
                         </tr>
@@ -28,8 +27,7 @@
                         <tr>
                             <td>🐮 {{i}}</td>
                             <td><input id="switch-sapi-{{i}}" class="bt-switch" type="checkbox" data-on-text="Sudah"
-                                    data-off-text="Belum">
-                            </td>
+                                    data-off-text="Belum"></td>
                             <td><button id="sapi-send-{{i}}" type="button" class="btn btn-success"
                                     disabled>Send</button></td>
                         </tr>
@@ -47,12 +45,11 @@
             <td>
                 <table>
                     <tbody>
-                        {{#each (range 1 10) as |i|}}
+                        {{#each (range 1 25) as |i|}}
                         <tr>
                             <td>🐐 {{i}}</td>
                             <td><input id="switch-kambing-{{i}}" class="bt-switch" type="checkbox" data-on-text="Sudah"
-                                    data-off-text="Belum">
-                            </td>
+                                    data-off-text="Belum"></td>
                             <td><button id="kambing-send-{{i}}" type="button" class="btn btn-success"
                                     disabled>Send</button></td>
                         </tr>
@@ -63,12 +60,11 @@
             <td style="padding-left: 20px;">
                 <table>
                     <tbody>
-                        {{#each (range 11 20) as |i|}}
+                        {{#each (range 26 50) as |i|}}
                         <tr>
                             <td>🐐 {{i}}</td>
                             <td><input id="switch-kambing-{{i}}" class="bt-switch" type="checkbox" data-on-text="Sudah"
-                                    data-off-text="Belum">
-                            </td>
+                                    data-off-text="Belum"></td>
                             <td><button id="kambing-send-{{i}}" type="button" class="btn btn-success"
                                     disabled>Send</button></td>
                         </tr>
@@ -122,6 +118,6 @@
         }
 
         attachEventListeners('sapi', 20);
-        attachEventListeners('kambing', 20);
+        attachEventListeners('kambing', 50);
     });
 </script>
